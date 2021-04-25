@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using System;
+using System.IO;
 
 namespace Nultien.TheShop.Application
 {
@@ -6,7 +10,8 @@ namespace Nultien.TheShop.Application
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // Application setup and start
+            Startup.Start();
         }
     }
 }
