@@ -3,12 +3,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Serilog;
+using Microsoft.Extensions.DependencyInjection;
+using Nultien.TheShop.DataStore;
 
 namespace Nultien.TheShop.Application
 {
     public static class Startup
     {
-        public static void Start()
+        public static IHost Start()
         {
             var builder = new ConfigurationBuilder();
 
@@ -20,12 +22,16 @@ namespace Nultien.TheShop.Application
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
-
+                    // Singletons
+                    services.AddSingleton<InMemoryDbContext>();
+                    services.AddSingleton<InMemoryDataStore>();
                 })
                 .UseSerilog()
                 .Build();
 
             Log.Logger.Information("Application Started!");
+
+            return host;
         }
 
         private static void ConfigureLogger(IConfigurationBuilder builder)

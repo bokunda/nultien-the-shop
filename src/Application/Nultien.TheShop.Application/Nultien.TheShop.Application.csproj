@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Implementations\Nultien.TheShop.DataStore\Nultien.TheShop.DataStore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="appsettings.local.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

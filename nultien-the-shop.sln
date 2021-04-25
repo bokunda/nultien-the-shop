@@ -11,21 +11,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{87B82526-936A-4ED7-8987-4C1474BCC946}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.Application", "src\Application\Nultien.TheShop.Application\Nultien.TheShop.Application.csproj", "{36B5FF38-C8CB-4258-85C4-EBBBB7C41BD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nultien.TheShop.Application", "src\Application\Nultien.TheShop.Application\Nultien.TheShop.Application.csproj", "{36B5FF38-C8CB-4258-85C4-EBBBB7C41BD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.Common", "src\Libraries\Nultien.TheShop.Common\Nultien.TheShop.Common.csproj", "{3517D76F-9433-40C0-9D90-B317BF5E08F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nultien.TheShop.Common", "src\Libraries\Implementations\Nultien.TheShop.Common\Nultien.TheShop.Common.csproj", "{3517D76F-9433-40C0-9D90-B317BF5E08F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.Tests.Unit.Common", "test\Nultien.TheShop.Tests.Unit.Common\Nultien.TheShop.Tests.Unit.Common.csproj", "{CBCE9E1A-F79A-4F89-9954-CED6AEC60BB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nultien.TheShop.Tests.Unit.Common", "test\Nultien.TheShop.Tests.Unit.Common\Nultien.TheShop.Tests.Unit.Common.csproj", "{CBCE9E1A-F79A-4F89-9954-CED6AEC60BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.Services", "src\Libraries\Nultien.TheShop.Services\Nultien.TheShop.Services.csproj", "{B9D2DF7E-946E-475B-93A3-C914834EB871}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nultien.TheShop.Services", "src\Libraries\Implementations\Nultien.TheShop.Services\Nultien.TheShop.Services.csproj", "{B9D2DF7E-946E-475B-93A3-C914834EB871}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.DataStore", "src\Libraries\Nultien.TheShop.DataStore\Nultien.TheShop.DataStore.csproj", "{71A12675-1E76-493C-B29D-83830A07FD07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nultien.TheShop.DataStore", "src\Libraries\Implementations\Nultien.TheShop.DataStore\Nultien.TheShop.DataStore.csproj", "{71A12675-1E76-493C-B29D-83830A07FD07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.Tests.Integration", "test\Nultien.TheShop.Tests.Integration\Nultien.TheShop.Tests.Integration.csproj", "{32C30EA4-08A1-4229-B91D-0DD6462A907B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nultien.TheShop.Tests.Integration", "test\Nultien.TheShop.Tests.Integration\Nultien.TheShop.Tests.Integration.csproj", "{32C30EA4-08A1-4229-B91D-0DD6462A907B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.Tests.Unit.Services", "test\Nultien.TheShop.Tests.Unit.Services\Nultien.TheShop.Tests.Unit.Services.csproj", "{928941D1-6D2A-4B6D-8739-9340AC0BAEB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nultien.TheShop.Tests.Unit.Services", "test\Nultien.TheShop.Tests.Unit.Services\Nultien.TheShop.Tests.Unit.Services.csproj", "{928941D1-6D2A-4B6D-8739-9340AC0BAEB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.Tests.Unit.DataStore", "test\Nultien.TheShop.Tests.Unit.DataStore\Nultien.TheShop.Tests.Unit.DataStore.csproj", "{47D9A0A5-67DC-4855-9203-44BF2EB1A200}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nultien.TheShop.Tests.Unit.DataStore", "test\Nultien.TheShop.Tests.Unit.DataStore\Nultien.TheShop.Tests.Unit.DataStore.csproj", "{47D9A0A5-67DC-4855-9203-44BF2EB1A200}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Abstractions", "Abstractions", "{54CD497D-7F91-416F-A171-BEB22E117F9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Implementations", "Implementations", "{06982606-4842-413B-9146-50805115AF98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.IDataStore", "src\Libraries\Abstractions\Nultien.TheShop.IDataStore\Nultien.TheShop.IDataStore.csproj", "{05DA363A-5D3F-4ACD-80A4-8410313CAE10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nultien.TheShop.IServices", "src\Libraries\Abstractions\Nultien.TheShop.IServices\Nultien.TheShop.IServices.csproj", "{CB614E67-56BA-4194-8415-BBECA96C424B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +73,14 @@ Global
 		{47D9A0A5-67DC-4855-9203-44BF2EB1A200}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47D9A0A5-67DC-4855-9203-44BF2EB1A200}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47D9A0A5-67DC-4855-9203-44BF2EB1A200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05DA363A-5D3F-4ACD-80A4-8410313CAE10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DA363A-5D3F-4ACD-80A4-8410313CAE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05DA363A-5D3F-4ACD-80A4-8410313CAE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05DA363A-5D3F-4ACD-80A4-8410313CAE10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB614E67-56BA-4194-8415-BBECA96C424B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB614E67-56BA-4194-8415-BBECA96C424B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB614E67-56BA-4194-8415-BBECA96C424B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB614E67-56BA-4194-8415-BBECA96C424B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,13 +89,17 @@ Global
 		{B9719E19-65D9-44E1-BCDC-4EB898B9FD9D} = {F8F2B40D-1B77-4F31-B79F-0E7B40E80539}
 		{87B82526-936A-4ED7-8987-4C1474BCC946} = {F8F2B40D-1B77-4F31-B79F-0E7B40E80539}
 		{36B5FF38-C8CB-4258-85C4-EBBBB7C41BD7} = {B9719E19-65D9-44E1-BCDC-4EB898B9FD9D}
-		{3517D76F-9433-40C0-9D90-B317BF5E08F4} = {87B82526-936A-4ED7-8987-4C1474BCC946}
+		{3517D76F-9433-40C0-9D90-B317BF5E08F4} = {06982606-4842-413B-9146-50805115AF98}
 		{CBCE9E1A-F79A-4F89-9954-CED6AEC60BB4} = {EAC46771-C9D7-44B8-9941-05468C7104C6}
-		{B9D2DF7E-946E-475B-93A3-C914834EB871} = {87B82526-936A-4ED7-8987-4C1474BCC946}
-		{71A12675-1E76-493C-B29D-83830A07FD07} = {87B82526-936A-4ED7-8987-4C1474BCC946}
+		{B9D2DF7E-946E-475B-93A3-C914834EB871} = {06982606-4842-413B-9146-50805115AF98}
+		{71A12675-1E76-493C-B29D-83830A07FD07} = {06982606-4842-413B-9146-50805115AF98}
 		{32C30EA4-08A1-4229-B91D-0DD6462A907B} = {EAC46771-C9D7-44B8-9941-05468C7104C6}
 		{928941D1-6D2A-4B6D-8739-9340AC0BAEB9} = {EAC46771-C9D7-44B8-9941-05468C7104C6}
 		{47D9A0A5-67DC-4855-9203-44BF2EB1A200} = {EAC46771-C9D7-44B8-9941-05468C7104C6}
+		{54CD497D-7F91-416F-A171-BEB22E117F9E} = {87B82526-936A-4ED7-8987-4C1474BCC946}
+		{06982606-4842-413B-9146-50805115AF98} = {87B82526-936A-4ED7-8987-4C1474BCC946}
+		{05DA363A-5D3F-4ACD-80A4-8410313CAE10} = {54CD497D-7F91-416F-A171-BEB22E117F9E}
+		{CB614E67-56BA-4194-8415-BBECA96C424B} = {54CD497D-7F91-416F-A171-BEB22E117F9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D42C00A5-3178-4D50-9BDC-802A7C7A462A}
