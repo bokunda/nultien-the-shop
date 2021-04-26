@@ -2,7 +2,7 @@
 
 namespace Nultien.TheShop.DataStore.Repositories
 {
-    public class SupplierRepository
+    public class SupplierRepository : ISupplierRepository
     {
         private readonly InMemoryDbContext context;
         private readonly ILogger<SupplierRepository> logger;

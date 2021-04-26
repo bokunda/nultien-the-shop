@@ -5,6 +5,8 @@ using System.IO;
 using Serilog;
 using Microsoft.Extensions.DependencyInjection;
 using Nultien.TheShop.DataStore;
+using Nultien.TheShop.Services;
+using Nultien.TheShop.DataStore.Repositories;
 
 namespace Nultien.TheShop.Application
 {
@@ -22,9 +24,18 @@ namespace Nultien.TheShop.Application
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
+                    // Services
+                    services.AddTransient<IShopService, ShopService>();
+                    services.AddTransient<IOrderService, OrderService>();
+
+                    // Repositories
+                    services.AddTransient<ISupplierRepository, SupplierRepository>();
+                    services.AddTransient<IInventoryRepository, InventoryRepository>();
+                    services.AddTransient<IArticleRepository, ArticleRepository>();
+                    services.AddTransient<IOrderRepository, OrderRepository>();
+
                     // Singletons
                     services.AddSingleton<InMemoryDbContext>();
-                    services.AddSingleton<InMemoryDataStore>();
                 })
                 .UseSerilog()
                 .Build();

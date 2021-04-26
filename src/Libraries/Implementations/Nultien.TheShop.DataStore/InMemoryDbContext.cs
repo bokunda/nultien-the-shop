@@ -1,17 +1,24 @@
 ﻿using Nultien.TheShop.Common.Models;
+using Nultien.TheShop.DataStore.Wrappers;
 using System.Collections.Generic;
 
 namespace Nultien.TheShop.DataStore
 {
     public class InMemoryDbContext
     {
-        public Dictionary<long, Supplier> Suppliers { get; set; }
-        /// <summary>
-        /// ArticleId, Inventory
-        /// </summary>
-        public Dictionary<long, Inventory> Inventories { get; set; }
-        public Dictionary<long, Article> Articles { get; set; }
-        public Dictionary<long, Customer> Customers { get; set; }
-        public Dictionary<long, Order> Orders { get; set; }
+        public InMemoryDbContext()
+        {
+            Suppliers = new SupplierList();
+            Inventories = new InventoryList();
+            Articles = new ArticleList();
+            Customers = new CustomerList();
+            Orders = new OrderList();
+        }
+
+        public SupplierList Suppliers { get; set; }
+        public InventoryList Inventories { get; set; }
+        public ArticleList Articles { get; set; }
+        public CustomerList Customers { get; set; }
+        public OrderList Orders { get; set; }
     }
 }

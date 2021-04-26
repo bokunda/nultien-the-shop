@@ -1,7 +1,9 @@
-﻿namespace Nultien.TheShop.Services
+﻿using Nultien.TheShop.Common.Models;
+
+namespace Nultien.TheShop.Services
 {
     public interface IOrderService
     {
-        void OrderArticle(string articleCode);
+        Order OrderArticle(string articleCode, float maxExpectedPrice, long buyerId);
     }
 }

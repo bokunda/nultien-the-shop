@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using Nultien.TheShop.Common.Models;
+using System.Linq;
 
 namespace Nultien.TheShop.DataStore.Repositories
 {
@@ -11,6 +13,11 @@ namespace Nultien.TheShop.DataStore.Repositories
         {
             this.context = context;
             this.logger = logger;
+        }
+
+        public Article GetByCode(string code)
+        {
+            return context.Articles.FirstOrDefault(x => x.Code.Equals(code));
         }
     }
 }

@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Abstractions\Nultien.TheShop.IServices\Nultien.TheShop.IServices.csproj" />
     <ProjectReference Include="..\..\Libraries\Implementations\Nultien.TheShop.DataStore\Nultien.TheShop.DataStore.csproj" />
+    <ProjectReference Include="..\..\Libraries\Implementations\Nultien.TheShop.Services\Nultien.TheShop.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
