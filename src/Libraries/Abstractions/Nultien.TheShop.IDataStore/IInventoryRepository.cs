@@ -5,7 +5,8 @@ namespace Nultien.TheShop.DataStore.Repositories
 {
     public interface IInventoryRepository
     {
-        Inventory GetArticle(Func<Inventory, bool> func);
-        bool DecreaseQuantity(Inventory inventory, long decrement = 1);
+        Inventory GetArticleFromInventory(Func<Inventory, bool> func);
+        bool DecreaseQuantity(string inventoryId, long decrement = 1);
+        bool IncreaseQuantity(string inventoryId, long increment = 1);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nultien.TheShop.Common.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Nultien.TheShop.DataStore.Repositories
@@ -17,14 +16,14 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.logger = logger;
         }
 
-        public Inventory GetArticle(Func<Inventory, bool> func)
+        public Inventory GetArticleFromInventory(Func<Inventory, bool> func)
         {
             return context.Inventories.Where(func).FirstOrDefault();
         }
 
-        public bool DecreaseQuantity(Inventory inventory, long decrement = 1)
+        public bool DecreaseQuantity(string inventoryId, long decrement = 1)
         {
-            var dbInventory = context.Inventories.FirstOrDefault(x => x.Id == inventory.Id);
+            var dbInventory = GetArticleFromInventory(x => x.Id.Equals(inventoryId));
 
             if (dbInventory.Quantity > 0)
             {
@@ -33,6 +32,14 @@ namespace Nultien.TheShop.DataStore.Repositories
             }
 
             return false;
+        }
+
+        public bool IncreaseQuantity(string inventoryId, long increment = 1)
+        {
+            var dbInventory = GetArticleFromInventory(x => x.Id.Equals(inventoryId));            
+            dbInventory.Quantity += increment;
+
+            return true;
         }
     }
 }

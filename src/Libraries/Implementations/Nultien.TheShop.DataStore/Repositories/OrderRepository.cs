@@ -37,7 +37,7 @@ namespace Nultien.TheShop.DataStore.Repositories
             //}
 
             // Save order in DB
-            inventoryRepository.DecreaseQuantity(inventory);
+            inventoryRepository.DecreaseQuantity(inventory.Id);
             Add(order);
 
             return order;
