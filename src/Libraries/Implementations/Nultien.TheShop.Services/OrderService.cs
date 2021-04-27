@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nultien.TheShop.Common.Models;
 using Nultien.TheShop.DataStore.Repositories;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nultien.TheShop.Services
 {
@@ -27,10 +27,20 @@ namespace Nultien.TheShop.Services
             this.logger = logger;
         }
 
-        public Order OrderArticle(string articleCode, float maxExpectedPrice, long buyerId)
+        public List<OrderItem> OrderArticle(string articleCode, long quantity, float maxExpectedPrice)
         {
-            var inventory = inventoryRepository.GetArticle(x => x.ArticleCode.Equals(articleCode) && x.Price <= maxExpectedPrice);
-            return orderRepository.CreateOrder(inventory, buyerId);
+            var inventories = inventoryRepository.GetArticleFromInventory(x => x.ArticleCode.Equals(articleCode) && x.Price <= maxExpectedPrice)
+                .OrderBy(y => y.Price)
+                .ToList();
+
+            var orderItems = orderRepository.CreateOrderItem(inventories, quantity);
+
+            return orderItems;
+        }
+
+        public Order CreateOrder(List<OrderItem> orderItems, string buyerId)
+        {
+            return orderRepository.CreateOrder(orderItems, buyerId);
         }
     }
 }

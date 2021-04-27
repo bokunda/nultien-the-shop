@@ -1,6 +1,7 @@
 ﻿using Nultien.TheShop.Common.Models;
 using Nultien.TheShop.DataStore.Repositories;
 using System;
+using System.Collections.Generic;
 
 namespace Nultien.TheShop.Services
 {
@@ -21,9 +22,14 @@ namespace Nultien.TheShop.Services
             return articleRepository.GetByCode(articleCode);
         }
 
-        public Order SellArticle(string articleCode, float maxExpectedPrice, long buyerId)
+        public List<OrderItem> SellArticle(string articleCode, long quantity, float maxExpectedPrice)
         {
-            return orderService.OrderArticle(articleCode, maxExpectedPrice, buyerId);
+            return orderService.OrderArticle(articleCode, quantity, maxExpectedPrice);
+        }
+
+        public Order CompleteOrder(List<OrderItem> orderItems, string buyerId)
+        {
+            return orderService.CreateOrder(orderItems, buyerId);
         }
     }
 }

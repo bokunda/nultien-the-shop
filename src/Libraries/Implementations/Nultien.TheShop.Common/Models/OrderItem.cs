@@ -12,5 +12,6 @@ namespace Nultien.TheShop.Common.Models
         public string ArticleCode { get; set; }
         public double Price { get; set; }
         public long Quantity { get; set; }
+        public string InventoryId { get; set; }
     }
 }

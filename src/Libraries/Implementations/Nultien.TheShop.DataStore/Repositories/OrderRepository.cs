@@ -16,36 +16,66 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.inventoryRepository = inventoryRepository;
         }
 
-        public Order CreateOrder(Inventory inventory, long buyerId)
+        public List<OrderItem> CreateOrderItem(List<Inventory> inventories, long quantity)
         {
-            var order = new Order
+            var orderItems = new List<OrderItem>();
+
+            foreach(var inventory in inventories)
             {
-                Id = Guid.NewGuid().ToString(),
-                CreatedAt = DateTime.UtcNow,
-            };
-
-            //foreach (var item in inventory)
-            //{
-            var item = inventory;
-                order.Items.Add(new OrderItem
+                if (quantity <= 0) break;
+                else
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    ArticleCode = item.ArticleCode,
-                    Price = item.Price,
-                    Quantity = 1
-                });
-            //}
+                    var orderItem = new OrderItem
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        ArticleCode = inventory.ArticleCode,
+                        Price = inventory.Price,                        
+                    };
 
-            // Save order in DB
-            inventoryRepository.DecreaseQuantity(inventory.Id);
-            Add(order);
+                    // If cannot get all resources from one inventory we will take all resources for one order item,
+                    // so we are creating order items for every inventory until we collect full quantity.
+                    var decr = inventory.Quantity >= quantity ? quantity : inventory.Quantity;
+                    orderItem.Quantity = inventory.Quantity;
+                    quantity -= inventory.Quantity;
 
-            return order;
+                    inventoryRepository.DecreaseQuantity(inventory.Id, decr);
+                }
+            }
+
+            // Check are we collected all items (quantity <= 0)
+            // if not, transaction failed, return all items back to inventory
+            if (quantity > 0)
+            {
+                foreach(var orderItem in orderItems)
+                {
+                    inventoryRepository.IncreaseQuantity(orderItem.InventoryId, orderItem.Quantity);
+                }
+
+                return null;
+            }
+
+            return orderItems;
         }
 
         public void Add(Order order)
         {
             context.Orders.Add(order);
+        }
+
+        public Order CreateOrder(List<OrderItem> orderItems, string buyerId)
+        {
+            var order = new Order
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreatedAt = DateTime.UtcNow,
+                Items = orderItems,
+                TotalPrice = orderItems.Sum(x => x.Price),
+            };           
+
+            // Save order in DB
+            Add(order);
+
+            return order;
         }
     }
 }

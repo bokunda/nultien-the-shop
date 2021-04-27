@@ -6,7 +6,7 @@ namespace Nultien.TheShop.DataStore.Repositories
     {
         Article GetByCode(string code);
         void Add(Article article);
-        void Remove(string code);
+        Article Remove(string code);
         void Upsert(Article article);
     }
 }

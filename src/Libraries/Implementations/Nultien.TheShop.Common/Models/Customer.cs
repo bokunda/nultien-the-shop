@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Nultien.TheShop.Common.Models
 {
@@ -9,6 +10,6 @@ namespace Nultien.TheShop.Common.Models
         public string LastName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public Order Order { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Nultien.TheShop.Common.Models
 
         public string Id { get; set; }
         public List<OrderItem> Items { get; set; }
-        public double Price { get; set; }
+        public double TotalPrice { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }
