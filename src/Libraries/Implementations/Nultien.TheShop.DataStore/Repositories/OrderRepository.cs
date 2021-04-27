@@ -1,4 +1,5 @@
 ﻿using Nultien.TheShop.Common.Models;
+using Nultien.TheShop.IDataStore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace Nultien.TheShop.DataStore.Repositories
     {
         private readonly InMemoryDbContext context;
         private readonly IInventoryRepository inventoryRepository;
+        private readonly ICustomerRepository customerRepository;
 
-        public OrderRepository(InMemoryDbContext context, IInventoryRepository inventoryRepository)
+        public OrderRepository(InMemoryDbContext context, IInventoryRepository inventoryRepository, ICustomerRepository customerRepository)
         {
             this.context = context;
             this.inventoryRepository = inventoryRepository;
+            this.customerRepository = customerRepository;
         }
 
         public List<OrderItem> CreateOrderItem(List<Inventory> inventories, long quantity)
@@ -38,6 +41,7 @@ namespace Nultien.TheShop.DataStore.Repositories
                     orderItem.Quantity = inventory.Quantity;
                     quantity -= inventory.Quantity;
 
+                    orderItems.Add(orderItem);
                     inventoryRepository.DecreaseQuantity(inventory.Id, decr);
                 }
             }
@@ -69,11 +73,12 @@ namespace Nultien.TheShop.DataStore.Repositories
                 Id = Guid.NewGuid().ToString(),
                 CreatedAt = DateTime.UtcNow,
                 Items = orderItems,
-                TotalPrice = orderItems.Sum(x => x.Price),
+                TotalPrice = orderItems.Sum(x => x.Price * x.Quantity),
             };           
 
             // Save order in DB
             Add(order);
+            customerRepository.AssignOrderToCustomer(order, buyerId);
 
             return order;
         }

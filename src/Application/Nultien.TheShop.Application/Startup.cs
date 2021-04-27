@@ -1,12 +1,13 @@
-﻿using System;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using Serilog;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Nultien.TheShop.DataStore;
-using Nultien.TheShop.Services;
 using Nultien.TheShop.DataStore.Repositories;
+using Nultien.TheShop.IDataStore;
+using Nultien.TheShop.Services;
+using Serilog;
+using System;
+using System.IO;
 
 namespace Nultien.TheShop.Application
 {
@@ -33,6 +34,7 @@ namespace Nultien.TheShop.Application
                     services.AddTransient<IInventoryRepository, InventoryRepository>();
                     services.AddTransient<IArticleRepository, ArticleRepository>();
                     services.AddTransient<IOrderRepository, OrderRepository>();
+                    services.AddTransient<ICustomerRepository, CustomerRepository>();
 
                     // Singletons
                     services.AddSingleton<InMemoryDbContext>();

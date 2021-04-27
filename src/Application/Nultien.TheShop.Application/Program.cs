@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Nultien.TheShop.DataStore;
 using Nultien.TheShop.Services;
+using System.Linq;
 
 namespace Nultien.TheShop.Application
 {
@@ -10,10 +12,17 @@ namespace Nultien.TheShop.Application
             // Application setup and start
             var host = Startup.Start();
 
-            // Get instance
+            // Insert data
+            var context = ActivatorUtilities.GetServiceOrCreateInstance<InMemoryDbContext>(host.Services);
+            DataSetup.InsertData(context);
+
+            // Get shopService instance
             var shopService = ActivatorUtilities.CreateInstance<ShopService>(host.Services);
-            shopService.SellArticle("article-code-123", 100, 1);
-            shopService.GetArticleInformation("article-code-123");
+
+            var orderItems = shopService.SellArticle("123-456-789", 10, 1000);
+            var order = shopService.CompleteOrder(orderItems, context.Customers.First().Id);
+
+            var article = shopService.GetArticleInformation("111-222-333");
         }
     }
 }
