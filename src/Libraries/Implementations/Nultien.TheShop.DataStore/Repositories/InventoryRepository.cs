@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Nultien.TheShop.Common.Enums;
 using Nultien.TheShop.Common.Models;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,25 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.logger = logger;
         }
 
-        public IEnumerable<Inventory> GetArticleFromInventory(Func<Inventory, bool> func)
+        public List<Inventory> GetArticleFromInventory(InventoryIndexType indexType, string inventoryId, string articleCode, Func<Inventory, bool> func)
         {
-            return context.Inventories.Where(func);
+            var inventoryData = new List<Inventory>();
+
+            if (indexType == InventoryIndexType.ArticleCode)
+            {
+                inventoryData.AddRange(context.Inventories.GetByArticleCode(articleCode).Where(func));
+            }
+            else if (indexType == InventoryIndexType.InventoryId)
+            {
+                inventoryData.AddRange(context.Inventories.GetByInventoryId(inventoryId).Where(func));
+            }
+            
+            return inventoryData;
         }
 
         public bool DecreaseQuantity(string inventoryId, long decrement = 1)
         {
-            var dbInventory = GetArticleFromInventory(x => x.Id.Equals(inventoryId)).FirstOrDefault();
+            var dbInventory = GetArticleFromInventory(InventoryIndexType.InventoryId, inventoryId, string.Empty, x => true).FirstOrDefault();
 
             if (dbInventory.Quantity > 0)
             {
@@ -37,7 +49,7 @@ namespace Nultien.TheShop.DataStore.Repositories
 
         public bool IncreaseQuantity(string inventoryId, long increment = 1)
         {
-            var dbInventory = GetArticleFromInventory(x => x.Id.Equals(inventoryId)).FirstOrDefault();            
+            var dbInventory = GetArticleFromInventory(InventoryIndexType.InventoryId, inventoryId, string.Empty, x => true).FirstOrDefault();
             dbInventory.Quantity += increment;
 
             return true;

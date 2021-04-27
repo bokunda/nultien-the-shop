@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nultien.TheShop.Common.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Nultien.TheShop.DataStore.Repositories
@@ -18,7 +19,7 @@ namespace Nultien.TheShop.DataStore.Repositories
 
         public Article GetByCode(string code)
         {
-            return context.Articles.FirstOrDefault(x => x.Code.Equals(code));
+            return context.Articles.GetByCode(code);
         }
 
         public void Add(Article article)
@@ -30,7 +31,6 @@ namespace Nultien.TheShop.DataStore.Repositories
 
             context.Articles.Add(article);
         }
-
         public Article Remove(string code)
         {
             var article = GetByCode(code);

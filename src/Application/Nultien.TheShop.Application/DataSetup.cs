@@ -10,13 +10,13 @@ namespace Nultien.TheShop.Application
     {
         public static void InsertData(InMemoryDbContext context)
         {
-            context.Customers.AddRange(GetCustomers());
-            context.Articles.AddRange(GetArticles());
-            context.Suppliers.AddRange(GetSuppliers(3));
+            GetCustomers().ForEach(x => context.Customers.Add(x));
+            GetArticles().ForEach(x => context.Articles.Add(x));
+            GetSuppliers(3).ForEach(x => context.Suppliers.Add(x));
 
             foreach (var supplier in context.Suppliers)
             {
-                context.Inventories.AddRange(supplier.Inventories);
+                supplier.Inventories.ForEach(x => context.Inventories.Add(x));
             }
         }
 

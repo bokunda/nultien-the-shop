@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Nultien.TheShop.Common.Enums;
 using Nultien.TheShop.Common.Models;
 using Nultien.TheShop.DataStore.Repositories;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Nultien.TheShop.Services
 
         public List<OrderItem> OrderArticle(string articleCode, long quantity, float maxExpectedPrice)
         {
-            var inventories = inventoryRepository.GetArticleFromInventory(x => x.ArticleCode.Equals(articleCode) && x.Price <= maxExpectedPrice)
+            var inventories = inventoryRepository.GetArticleFromInventory(InventoryIndexType.ArticleCode, string.Empty, articleCode, x => x.Price <= maxExpectedPrice)
                 .OrderBy(y => y.Price)
                 .ToList();
 
