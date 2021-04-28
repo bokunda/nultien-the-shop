@@ -15,13 +15,21 @@ namespace Nultien.TheShop.Application
     {
         public static IHost Start()
         {
+            // Register unhandled exception trapper
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+
+            // Create builder
             var builder = new ConfigurationBuilder();
 
+            // Use configuration from appsettings.json
             BuildConfig(builder);
+
+            // Configure serilog
             ConfigureLogger(builder);
 
             Log.Logger.Information("Application Starting!");
 
+            // Configure services
             var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
@@ -60,6 +68,12 @@ namespace Nultien.TheShop.Application
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "local"}.json", optional: true)
                 .AddEnvironmentVariables();
+        }
+
+        static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        {
+            Log.Fatal(e.ExceptionObject.ToString());
+            Environment.Exit(-1);
         }
     }
 }

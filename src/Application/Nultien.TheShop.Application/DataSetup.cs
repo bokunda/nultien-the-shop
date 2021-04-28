@@ -1,15 +1,17 @@
-﻿using Nultien.TheShop.Common.Models;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Nultien.TheShop.Common.Models;
 using Nultien.TheShop.DataStore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Nultien.TheShop.Application
 {
     public static class DataSetup
     {
-        public static void InsertData(InMemoryDbContext context)
+        public static InMemoryDbContext InsertData(IServiceProvider serviceProvider)
         {
+            var context = ActivatorUtilities.GetServiceOrCreateInstance<InMemoryDbContext>(serviceProvider);
+
             GetCustomers().ForEach(x => context.Customers.Add(x));
             GetArticles().ForEach(x => context.Articles.Add(x));
             GetSuppliers(3).ForEach(x => context.Suppliers.Add(x));
@@ -18,6 +20,8 @@ namespace Nultien.TheShop.Application
             {
                 supplier.Inventories.ForEach(x => context.Inventories.Add(x));
             }
+
+            return context;
         }
 
         private static List<Customer> GetCustomers()
