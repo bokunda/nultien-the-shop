@@ -23,11 +23,5 @@ namespace Nultien.TheShop.DataStore.Repositories
         /// <param name="code"></param>
         /// <returns></returns>
         Article Remove(string code);
-
-        /// <summary>
-        /// Adds article if not exists in the database, otherwise updates it.
-        /// </summary>
-        /// <param name="article"></param>
-        void Upsert(Article article);
     }
 }

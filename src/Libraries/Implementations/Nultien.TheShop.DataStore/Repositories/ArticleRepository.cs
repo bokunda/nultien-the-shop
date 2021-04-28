@@ -1,4 +1,5 @@
-﻿using Nultien.TheShop.Common.Exceptions;
+﻿using Microsoft.Extensions.Logging;
+using Nultien.TheShop.Common.Exceptions;
 using Nultien.TheShop.Common.Metrics;
 using Nultien.TheShop.Common.Models;
 using System;
@@ -9,11 +10,13 @@ namespace Nultien.TheShop.DataStore.Repositories
     {
         private readonly InMemoryDbContext context;
         private readonly ArticleMetrics articleMetrics;
+        private readonly ILogger<ArticleRepository> logger;
 
-        public ArticleRepository(InMemoryDbContext context, ArticleMetrics articleMetrics)
+        public ArticleRepository(InMemoryDbContext context, ArticleMetrics articleMetrics, ILogger<ArticleRepository> logger)
         {
             this.context = context;
             this.articleMetrics = articleMetrics;
+            this.logger = logger;
         }
 
         /// </<inheritdoc/>
@@ -31,7 +34,14 @@ namespace Nultien.TheShop.DataStore.Repositories
                 article.Id = Guid.NewGuid().ToString();
             }
 
-            context.Articles.Add(article);
+            if (!context.Articles.Contains(article))
+            {
+                context.Articles.Add(article);
+            }
+            else
+            {
+                logger.LogInformation("Article {articleCode} already exists.", article.Code);
+            }
         }
 
         /// </<inheritdoc/>
@@ -45,13 +55,6 @@ namespace Nultien.TheShop.DataStore.Repositories
             }
 
             return article;
-        }
-
-        /// </<inheritdoc/>
-        public void Upsert(Article article)
-        {
-            Remove(article.Code);
-            Add(article);
         }
     }
 }
