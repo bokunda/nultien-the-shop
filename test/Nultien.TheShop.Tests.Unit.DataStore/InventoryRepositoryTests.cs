@@ -5,7 +5,6 @@ using Nultien.TheShop.Common.Models;
 using Nultien.TheShop.DataStore;
 using Nultien.TheShop.DataStore.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 

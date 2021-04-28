@@ -52,7 +52,7 @@ namespace Nultien.TheShop.DataStore.Repositories
                     var decr = inventory.Quantity >= quantity ? quantity : inventory.Quantity;
                     if (inventoryRepository.DecreaseQuantity(inventory.Id, decr))
                     {
-                        orderItem.Quantity = inventory.Quantity;
+                        orderItem.Quantity = decr;
                         quantity -= inventory.Quantity;
                         orderItem.InventoryId = inventory.Id;
 
