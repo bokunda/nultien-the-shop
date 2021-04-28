@@ -18,12 +18,12 @@ namespace Nultien.TheShop.DataStore.Repositories
         {
             var customer = context.Customers.FirstOrDefault(x => x.Id.Equals(customerId));
 
-            if (customer != null)
+            if (customer != null && order != null)
             {
                 customer.Orders.Add(order);
             }
 
-            return customer != null;
+            return customer != null && order != null;
         }
     }
 }
