@@ -40,7 +40,7 @@ namespace Nultien.TheShop.DataStore.Repositories
         {
             var dbInventory = GetArticleFromInventory(InventoryIndexType.InventoryId, inventoryId, string.Empty, x => true).FirstOrDefault();
 
-            if (dbInventory?.Quantity > 0)
+            if (dbInventory?.Quantity > 0 && dbInventory.Quantity >= decrement)
             {
                 dbInventory.Quantity -= decrement;
                 return true;
