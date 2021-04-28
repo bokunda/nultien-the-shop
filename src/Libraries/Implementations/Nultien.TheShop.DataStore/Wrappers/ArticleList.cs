@@ -7,13 +7,13 @@ namespace Nultien.TheShop.DataStore.Wrappers
 {
     public class ArticleList : List<Article>
     {
-        private readonly Dictionary<string, List<Article>> articleIdIndex = new Dictionary<string, List<Article>>();
+        private readonly Dictionary<string, List<Article>> articleCodeIndex = new Dictionary<string, List<Article>>();
 
         public new void Add(Article article)
         {
             if (article == null) return;
 
-            articleIdIndex.AddOrUpdate(article.Code.ToLower(),
+            articleCodeIndex.AddOrUpdate(article.Code.ToLower(),
                 index =>
                 {
                     index.Add(article);
@@ -27,7 +27,7 @@ namespace Nultien.TheShop.DataStore.Wrappers
         public new bool Contains(Article article)
         {
             return !string.IsNullOrEmpty(article.Code)
-                ? articleIdIndex.ContainsKey(article.Code.ToLower())
+                ? articleCodeIndex.ContainsKey(article.Code.ToLower())
                 : base.Contains(article);
         }
 
@@ -37,7 +37,7 @@ namespace Nultien.TheShop.DataStore.Wrappers
 
             if (!string.IsNullOrEmpty(article.Code))
             {
-                articleIdIndex.Remove(article.Code.ToLower());
+                articleCodeIndex.Remove(article.Code.ToLower());
             }
 
             return removed;
@@ -47,7 +47,7 @@ namespace Nultien.TheShop.DataStore.Wrappers
         {
             Article article;
 
-            var success = articleIdIndex.TryGetValue(articleCode, out var articles);
+            var success = articleCodeIndex.TryGetValue(articleCode, out var articles);
 
             if (success)
             {
@@ -58,7 +58,7 @@ namespace Nultien.TheShop.DataStore.Wrappers
                 article = base.Find(x => x.Code.Equals(articleCode));
                 if (article != null)
                 {
-                    articleIdIndex.AddOrUpdate(article.Code.ToLower(),
+                    articleCodeIndex.AddOrUpdate(article.Code.ToLower(),
                     index =>
                     {
                         index.Add(article);

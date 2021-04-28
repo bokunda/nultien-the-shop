@@ -12,21 +12,15 @@ namespace Nultien.TheShop.Services
     public class OrderService : IOrderService
     {
         private readonly ILogger<OrderService> logger;
-        private readonly ISupplierRepository supplierRepository;
         private readonly IInventoryRepository inventoryRepository;
-        private readonly IArticleRepository articleRepository;
         private readonly IOrderRepository orderRepository;
         private readonly OrderMetrics orderMetrics;
 
-        public OrderService(ISupplierRepository supplierRepository, 
-            IInventoryRepository inventoryRepository,
+        public OrderService(IInventoryRepository inventoryRepository,
             IOrderRepository orderRepository,
-            IArticleRepository articleRepository, 
             OrderMetrics orderMetrics,
             ILogger<OrderService> logger)
         {
-            this.supplierRepository = supplierRepository;
-            this.articleRepository = articleRepository;
             this.inventoryRepository = inventoryRepository;
             this.orderRepository = orderRepository;
             this.orderMetrics = orderMetrics;
