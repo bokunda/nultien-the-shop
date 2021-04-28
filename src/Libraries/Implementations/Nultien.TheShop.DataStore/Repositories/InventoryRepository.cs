@@ -18,6 +18,7 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.logger = logger;
         }
 
+        /// </<inheritdoc/>
         public List<Inventory> GetArticleFromInventory(InventoryIndexType indexType, string inventoryId, string articleCode, Func<Inventory, bool> func)
         {
             var inventoryData = new List<Inventory>();
@@ -34,6 +35,7 @@ namespace Nultien.TheShop.DataStore.Repositories
             return inventoryData;
         }
 
+        /// </<inheritdoc/>
         public bool DecreaseQuantity(string inventoryId, long decrement = 1)
         {
             var dbInventory = GetArticleFromInventory(InventoryIndexType.InventoryId, inventoryId, string.Empty, x => true).FirstOrDefault();
@@ -49,6 +51,7 @@ namespace Nultien.TheShop.DataStore.Repositories
             return false;
         }
 
+        /// </<inheritdoc/>
         public bool IncreaseQuantity(string inventoryId, long increment = 1)
         {
             var dbInventory = GetArticleFromInventory(InventoryIndexType.InventoryId, inventoryId, string.Empty, x => true).FirstOrDefault();

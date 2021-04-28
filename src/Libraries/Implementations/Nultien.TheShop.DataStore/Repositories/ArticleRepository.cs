@@ -16,12 +16,14 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.articleMetrics = articleMetrics;
         }
 
+        /// </<inheritdoc/>
         public Article GetByCode(string code)
         {
             var article = context.Articles.GetByCode(code);
             return article ?? throw new ArticleNotFoundException($"Article {code} not found in database.", articleMetrics);
         }
 
+        /// </<inheritdoc/>
         public void Add(Article article)
         {
             if (string.IsNullOrEmpty(article.Id))
@@ -31,6 +33,8 @@ namespace Nultien.TheShop.DataStore.Repositories
 
             context.Articles.Add(article);
         }
+
+        /// </<inheritdoc/>
         public Article Remove(string code)
         {
             var article = GetByCode(code);
@@ -43,6 +47,7 @@ namespace Nultien.TheShop.DataStore.Repositories
             return article;
         }
 
+        /// </<inheritdoc/>
         public void Upsert(Article article)
         {
             Remove(article.Code);

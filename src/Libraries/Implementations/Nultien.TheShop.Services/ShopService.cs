@@ -28,6 +28,7 @@ namespace Nultien.TheShop.Services
             this.logger = logger;
         }
 
+        /// </<inheritdoc/>
         public Article GetArticleInformation(string articleCode)
         {
             try
@@ -43,11 +44,13 @@ namespace Nultien.TheShop.Services
             return null;
         }
 
+        /// </<inheritdoc/>
         public List<OrderItem> SellArticle(string articleCode, long quantity, float maxExpectedPrice)
         {
             return orderService.OrderArticle(articleCode, quantity, maxExpectedPrice);
         }
 
+        /// </<inheritdoc/>
         public void CompleteOrder(List<OrderItem> orderItems, string buyerId)
         {
             try

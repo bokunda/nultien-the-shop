@@ -13,6 +13,7 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.context = context;
         }
 
+        /// </<inheritdoc/>
         public bool AssignOrderToCustomer(Order order, string customerId)
         {
             var customer = context.Customers.FirstOrDefault(x => x.Id.Equals(customerId));

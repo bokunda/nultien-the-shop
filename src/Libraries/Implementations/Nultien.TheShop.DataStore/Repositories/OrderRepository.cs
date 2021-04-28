@@ -30,6 +30,7 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.logger = logger;
         }
 
+        /// </<inheritdoc/>
         public List<OrderItem> CreateOrderItem(List<Inventory> inventories, long quantity)
         {
             var orderItems = new List<OrderItem>();
@@ -75,11 +76,13 @@ namespace Nultien.TheShop.DataStore.Repositories
             return orderItems;
         }
 
+        /// </<inheritdoc/>
         public void Add(Order order)
         {
             context.Orders.Add(order);
         }
 
+        /// </<inheritdoc/>
         public Order CreateOrder(List<OrderItem> orderItems, string buyerId)
         {
             var order = new Order

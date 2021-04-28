@@ -13,16 +13,19 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.context = context;
         }
 
+        /// </<inheritdoc/>
         public Supplier GetById(string id)
         {
             return context.Suppliers.FirstOrDefault(x => x.Id.Equals(id));
         }
 
+        /// </<inheritdoc/>
         public Supplier GetByName(string name)
         {
             return context.Suppliers.FirstOrDefault(x => x.Id.Equals(name));
         }
 
+        /// </<inheritdoc/>
         public bool AddSupplier(Supplier supplier)
         {
             if (GetByName(supplier.Name) == null)

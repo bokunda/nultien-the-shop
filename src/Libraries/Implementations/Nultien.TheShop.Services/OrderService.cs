@@ -33,6 +33,7 @@ namespace Nultien.TheShop.Services
             this.logger = logger;
         }
 
+        /// </<inheritdoc/>
         public List<OrderItem> OrderArticle(string articleCode, long quantity, float maxExpectedPrice)
         {
             List<OrderItem> orderItems = null;
@@ -50,6 +51,7 @@ namespace Nultien.TheShop.Services
             return orderItems;
         }
 
+        /// </<inheritdoc/>
         public Order CreateOrder(List<OrderItem> orderItems, string buyerId)
         {
             if (orderItems != null && orderItems.Any())
