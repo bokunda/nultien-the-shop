@@ -45,7 +45,7 @@ namespace Nultien.TheShop.Services
         }
 
         /// </<inheritdoc/>
-        public List<OrderItem> SellArticle(string articleCode, long quantity, float maxExpectedPrice)
+        public List<OrderItem> SellArticle(string articleCode, long quantity, double maxExpectedPrice)
         {
             return orderService.OrderArticle(articleCode, quantity, maxExpectedPrice);
         }

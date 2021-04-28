@@ -34,7 +34,7 @@ namespace Nultien.TheShop.Services
         }
 
         /// </<inheritdoc/>
-        public List<OrderItem> OrderArticle(string articleCode, long quantity, float maxExpectedPrice)
+        public List<OrderItem> OrderArticle(string articleCode, long quantity, double maxExpectedPrice)
         {
             List<OrderItem> orderItems = null;
             var inventories = inventoryRepository.GetArticleFromInventory(InventoryIndexType.ArticleCode, string.Empty, articleCode, x => x.Price <= maxExpectedPrice)

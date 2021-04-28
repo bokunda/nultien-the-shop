@@ -12,7 +12,7 @@ namespace Nultien.TheShop.Services
         /// <param name="quantity"></param>
         /// <param name="maxExpectedPrice"></param>
         /// <returns></returns>
-        List<OrderItem> OrderArticle(string articleCode, long quantity, float maxExpectedPrice);
+        List<OrderItem> OrderArticle(string articleCode, long quantity, double maxExpectedPrice);
 
         /// <summary>
         /// Create order based on order items and buyer id.
