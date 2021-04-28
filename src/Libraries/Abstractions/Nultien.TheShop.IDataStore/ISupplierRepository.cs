@@ -4,12 +4,6 @@ namespace Nultien.TheShop.DataStore.Repositories
 {
     public interface ISupplierRepository
     {
-        /// <summary>
-        /// Get supplier from the database.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Supplier GetById(string id);
 
         /// <summary>
         /// Get supplier from the database by supplier name.

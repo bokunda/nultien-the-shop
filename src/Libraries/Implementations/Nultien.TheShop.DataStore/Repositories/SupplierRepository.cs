@@ -14,15 +14,9 @@ namespace Nultien.TheShop.DataStore.Repositories
         }
 
         /// </<inheritdoc/>
-        public Supplier GetById(string id)
-        {
-            return context.Suppliers.FirstOrDefault(x => x.Id.Equals(id));
-        }
-
-        /// </<inheritdoc/>
         public Supplier GetByName(string name)
         {
-            return context.Suppliers.FirstOrDefault(x => x.Id.Equals(name));
+            return context.Suppliers.FirstOrDefault(x => x.Name.Equals(name));
         }
 
         /// </<inheritdoc/>

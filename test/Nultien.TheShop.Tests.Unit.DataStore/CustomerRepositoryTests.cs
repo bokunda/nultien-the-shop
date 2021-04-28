@@ -1,6 +1,5 @@
 ﻿using Autofac.Extras.Moq;
 using Microsoft.Extensions.Logging;
-using Nultien.TheShop.Common.Exceptions;
 using Nultien.TheShop.Common.Models;
 using Nultien.TheShop.DataStore;
 using Nultien.TheShop.DataStore.Repositories;
