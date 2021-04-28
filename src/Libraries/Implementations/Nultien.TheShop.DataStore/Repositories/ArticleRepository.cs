@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Nultien.TheShop.Common.Exceptions;
+﻿using Nultien.TheShop.Common.Exceptions;
 using Nultien.TheShop.Common.Metrics;
 using Nultien.TheShop.Common.Models;
 using System;

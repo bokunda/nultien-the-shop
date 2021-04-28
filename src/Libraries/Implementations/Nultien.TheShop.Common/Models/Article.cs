@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Nultien.TheShop.Common.Models
+﻿namespace Nultien.TheShop.Common.Models
 {
     public class Article
     {

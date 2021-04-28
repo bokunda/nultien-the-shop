@@ -3,7 +3,6 @@ using Nultien.TheShop.Common.Exceptions;
 using Nultien.TheShop.Common.Metrics;
 using Nultien.TheShop.Common.Models;
 using Nultien.TheShop.DataStore.Repositories;
-using System;
 using System.Collections.Generic;
 
 namespace Nultien.TheShop.Services
