@@ -56,13 +56,16 @@ namespace Nultien.TheShop.DataStore.Wrappers
             else
             {
                 article = base.Find(x => x.Code.Equals(articleCode));
-                articleIdIndex.AddOrUpdate(article.Code.ToLower(),
-                index =>
+                if (article != null)
                 {
-                    index.Add(article);
-                    return index;
-                },
-                () => new List<Article> { article });
+                    articleIdIndex.AddOrUpdate(article.Code.ToLower(),
+                    index =>
+                    {
+                        index.Add(article);
+                        return index;
+                    },
+                    () => new List<Article> { article });
+                }
             }
 
             return article;

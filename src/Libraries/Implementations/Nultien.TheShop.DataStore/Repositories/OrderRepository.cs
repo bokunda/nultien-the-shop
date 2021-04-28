@@ -1,4 +1,7 @@
-﻿using Nultien.TheShop.Common.Models;
+﻿using Microsoft.Extensions.Logging;
+using Nultien.TheShop.Common.Exceptions;
+using Nultien.TheShop.Common.Metrics;
+using Nultien.TheShop.Common.Models;
 using Nultien.TheShop.IDataStore;
 using System;
 using System.Collections.Generic;
@@ -11,12 +14,20 @@ namespace Nultien.TheShop.DataStore.Repositories
         private readonly InMemoryDbContext context;
         private readonly IInventoryRepository inventoryRepository;
         private readonly ICustomerRepository customerRepository;
+        private readonly OrderMetrics orderMetrics;
+        private readonly ILogger<OrderRepository> logger;
 
-        public OrderRepository(InMemoryDbContext context, IInventoryRepository inventoryRepository, ICustomerRepository customerRepository)
+        public OrderRepository(InMemoryDbContext context, 
+            IInventoryRepository inventoryRepository, 
+            ICustomerRepository customerRepository, 
+            OrderMetrics orderMetrics,
+            ILogger<OrderRepository> logger)
         {
             this.context = context;
             this.inventoryRepository = inventoryRepository;
             this.customerRepository = customerRepository;
+            this.orderMetrics = orderMetrics;
+            this.logger = logger;
         }
 
         public List<OrderItem> CreateOrderItem(List<Inventory> inventories, long quantity)
@@ -38,12 +49,14 @@ namespace Nultien.TheShop.DataStore.Repositories
                     // If cannot get all resources from one inventory we will take all resources for one order item,
                     // so we are creating order items for every inventory until we collect full quantity.
                     var decr = inventory.Quantity >= quantity ? quantity : inventory.Quantity;
-                    orderItem.Quantity = inventory.Quantity;
-                    quantity -= inventory.Quantity;
-                    orderItem.InventoryId = inventory.Id;
+                    if (inventoryRepository.DecreaseQuantity(inventory.Id, decr))
+                    {
+                        orderItem.Quantity = inventory.Quantity;
+                        quantity -= inventory.Quantity;
+                        orderItem.InventoryId = inventory.Id;
 
-                    orderItems.Add(orderItem);
-                    inventoryRepository.DecreaseQuantity(inventory.Id, decr);
+                        orderItems.Add(orderItem);
+                    }
                 }
             }
 
@@ -56,7 +69,7 @@ namespace Nultien.TheShop.DataStore.Repositories
                     inventoryRepository.IncreaseQuantity(orderItem.InventoryId, orderItem.Quantity);
                 }
 
-                return null;
+                logger.LogInformation("Cannot order item {articleCode} because there are no enough articles in inventories. ({currentQuantity}/{wantedQuantity})", inventories.FirstOrDefault()?.ArticleCode, orderItems.Sum(x => x.Quantity), quantity);
             }
 
             return orderItems;
@@ -77,10 +90,14 @@ namespace Nultien.TheShop.DataStore.Repositories
                 TotalPrice = orderItems.Sum(x => x.Price * x.Quantity),
             };           
 
+            if (!customerRepository.AssignOrderToCustomer(order, buyerId))
+            {
+                var msg = $"Customer doesn't exists, order creation will fail for customer {buyerId}!";
+                throw new OrderCreationFailedException(msg, orderMetrics);
+            }
+
             // Save order in DB
             Add(order);
-            customerRepository.AssignOrderToCustomer(order, buyerId);
-
             return order;
         }
     }

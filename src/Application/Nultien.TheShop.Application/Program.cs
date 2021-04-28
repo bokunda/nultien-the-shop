@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Nultien.TheShop.Common.Metrics;
 using Nultien.TheShop.Services;
 using System.Linq;
 
@@ -14,14 +16,30 @@ namespace Nultien.TheShop.Application
             // Insert data
             var context = DataSetup.InsertData(host.Services);
 
-            // Get shopService instance
+            // Get instances to work with
             var shopService = ActivatorUtilities.GetServiceOrCreateInstance<IShopService>(host.Services);
-            
+            var orderMetrics = ActivatorUtilities.GetServiceOrCreateInstance<OrderMetrics>(host.Services);
+            var articleMetrics = ActivatorUtilities.GetServiceOrCreateInstance<ArticleMetrics>(host.Services);
+            var logger = ActivatorUtilities.GetServiceOrCreateInstance<ILogger<Program>>(host.Services);
 
-            var orderItems = shopService.SellArticle("123-456-789", 10, 1000);
-            var order = shopService.CompleteOrder(orderItems, context.Customers.First().Id);
 
+            // Create orders
+            var orderItems = shopService.SellArticle("123-456-789", 10, 1000);            
+            shopService.CompleteOrder(orderItems, context.Customers.First().Id);
+
+            orderItems = shopService.SellArticle("INVALID", 10, 1000);
+            shopService.CompleteOrder(orderItems, context.Customers.First().Id);
+
+            // Article search
             var article = shopService.GetArticleInformation("111-222-333");
+            logger.LogInformation(article?.ToString() ?? "Article doesn't exists!");
+
+            article = shopService.GetArticleInformation("INVALID");
+            logger.LogInformation(article?.ToString() ?? "Article doesn't exists!");
+
+            // Metrics
+            logger.LogInformation("Metrics for Orders, total orders attempts: {totalOrderAttempts}, successfull orders {successfullOrders}, failed orders {failedOrders}", orderMetrics.Failed + orderMetrics.Completed, orderMetrics.Completed, orderMetrics.Failed);
+            logger.LogInformation("Metrics for Articles, total searched articles: {totalArticlesSearches}, articles that exists {existingArticles}, non existsing articles {nonExistingArticles}", articleMetrics.NotFound + articleMetrics.Found, articleMetrics.Found, articleMetrics.NotFound);
         }
     }
 }

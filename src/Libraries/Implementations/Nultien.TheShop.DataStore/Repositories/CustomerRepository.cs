@@ -13,10 +13,16 @@ namespace Nultien.TheShop.DataStore.Repositories
             this.context = context;
         }
 
-        public void AssignOrderToCustomer(Order order, string customerId)
+        public bool AssignOrderToCustomer(Order order, string customerId)
         {
             var customer = context.Customers.FirstOrDefault(x => x.Id.Equals(customerId));
-            customer.Orders.Add(order);
+
+            if (customer != null)
+            {
+                customer.Orders.Add(order);
+            }
+
+            return customer != null;
         }
     }
 }

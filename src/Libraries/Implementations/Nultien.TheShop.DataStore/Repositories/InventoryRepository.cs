@@ -38,11 +38,13 @@ namespace Nultien.TheShop.DataStore.Repositories
         {
             var dbInventory = GetArticleFromInventory(InventoryIndexType.InventoryId, inventoryId, string.Empty, x => true).FirstOrDefault();
 
-            if (dbInventory.Quantity > 0)
+            if (dbInventory?.Quantity > 0)
             {
                 dbInventory.Quantity -= decrement;
                 return true;
             }
+
+            logger.LogInformation("DecreaseQuantity failed, Quantity property for inventory {inventoryId} stays unchanges, Quantity: {quantity}.", inventoryId, dbInventory?.Quantity);
 
             return false;
         }
@@ -50,9 +52,16 @@ namespace Nultien.TheShop.DataStore.Repositories
         public bool IncreaseQuantity(string inventoryId, long increment = 1)
         {
             var dbInventory = GetArticleFromInventory(InventoryIndexType.InventoryId, inventoryId, string.Empty, x => true).FirstOrDefault();
-            dbInventory.Quantity += increment;
 
-            return true;
+            if (dbInventory?.Quantity != null)
+            {
+                dbInventory.Quantity += increment;
+                return true;
+            }
+
+            logger.LogInformation("IncreaseQuantity failed, Quantity property for inventory {inventoryId} stays unchanges, Quantity: {quantity}.", inventoryId, dbInventory?.Quantity);
+
+            return false;
         }
     }
 }

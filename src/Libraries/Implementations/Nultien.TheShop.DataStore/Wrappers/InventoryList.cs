@@ -1,6 +1,5 @@
 ﻿using Nultien.TheShop.Common;
 using Nultien.TheShop.Common.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,7 +45,7 @@ namespace Nultien.TheShop.DataStore.Wrappers
             else
             {
                 inventory = FindAll(x => x.ArticleCode.Equals(articleCode));
-                if (inventory.Any())
+                if (inventory != null && inventory.Any())
                 {
                     inventoryArticleCodeIndex.AddOrUpdate(inventory.First().ArticleCode,
                     index => { },
@@ -68,7 +67,7 @@ namespace Nultien.TheShop.DataStore.Wrappers
             else
             {
                 inventory = FindAll(x => x.Id.Equals(inventoryId));
-                if (inventory.Any())
+                if (inventory != null && inventory.Any())
                 {
                     inventoryIdIndex.AddOrUpdate(inventory.First().ArticleCode,
                     index => { },

@@ -1,25 +1,26 @@
 ﻿using Microsoft.Extensions.Logging;
+using Nultien.TheShop.Common.Exceptions;
+using Nultien.TheShop.Common.Metrics;
 using Nultien.TheShop.Common.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Nultien.TheShop.DataStore.Repositories
 {
     public class ArticleRepository : IArticleRepository
     {
         private readonly InMemoryDbContext context;
-        private readonly ILogger<ArticleRepository> logger;
+        private readonly ArticleMetrics articleMetrics;
 
-        public ArticleRepository(InMemoryDbContext context, ILogger<ArticleRepository> logger)
+        public ArticleRepository(InMemoryDbContext context, ArticleMetrics articleMetrics)
         {
             this.context = context;
-            this.logger = logger;
+            this.articleMetrics = articleMetrics;
         }
 
         public Article GetByCode(string code)
         {
-            return context.Articles.GetByCode(code);
+            var article = context.Articles.GetByCode(code);
+            return article ?? throw new ArticleNotFoundException($"Article {code} not found in database.", articleMetrics);
         }
 
         public void Add(Article article)

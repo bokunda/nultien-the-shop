@@ -12,5 +12,10 @@ namespace Nultien.TheShop.Common.Models
         /// </summary>
         public string Code { get; set; }
 
+        public override string ToString()
+        {
+            return $"Article Id: {Id}, Name: {Name}, Description: {Description}, Code: {Code}.";
+        }
+
     }
 }

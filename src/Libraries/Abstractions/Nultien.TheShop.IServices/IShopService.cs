@@ -7,6 +7,6 @@ namespace Nultien.TheShop.Services
     {
         Article GetArticleInformation(string articleCode);
         List<OrderItem> SellArticle(string articleCode, long quantity, float maxExpectedPrice);
-        Order CompleteOrder(List<OrderItem> orderItems, string buyerId);
+        void CompleteOrder(List<OrderItem> orderItems, string buyerId);
     }
 }

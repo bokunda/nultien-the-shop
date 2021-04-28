@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Nultien.TheShop.Common.Metrics;
 using Nultien.TheShop.DataStore;
 using Nultien.TheShop.DataStore.Repositories;
 using Nultien.TheShop.IDataStore;
@@ -46,6 +47,8 @@ namespace Nultien.TheShop.Application
 
                     // Singletons
                     services.AddSingleton<InMemoryDbContext>();
+                    services.AddSingleton<OrderMetrics>();
+                    services.AddSingleton<ArticleMetrics>();
                 })
                 .UseSerilog()
                 .Build();
