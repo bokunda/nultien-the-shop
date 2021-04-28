@@ -9,29 +9,34 @@ namespace Nultien.TheShop.Tests.Integration
     {
 
         [Theory]
-        [InlineData(true, "123-456-789", 10, 1000, 1, 0)]
-        [InlineData(false, "INVALID", 10, 1000, 0, 1)] // article code doesn't exist
-        [InlineData(false, "123-456-789", 100000, 1000, 0, 1)] // quantity is bigger than expected
-        [InlineData(false, "123-456-789", 10, 1, 0, 1)] // maxExpectedPrice is lower than expected
-        [InlineData(false, "", 10, 1, 0, 1)] // string.Empty as article code 
-        [InlineData(false, null, 10, 1, 0, 1)] // string.Empty as article code 
-        public void TestFullArticleSellingFlow(bool shouldCompleteOrder, string articleCode, long quantity, double maxExpectedPrice, long metricsCompleted, long metricsFailed)
+        [InlineData(new bool[] { true }, new string[] { "123-456-789" }, new long[] { 10 }, new double[] { 1000 }, 1, 0)] // one article, happy flow
+        [InlineData(new bool[] { true, true }, new string[] { "123-456-789", "111-222-333" }, new long[] { 10, 4 }, new double[] { 1000, 20000 }, 2, 0)] // two articles, happy flow
+        [InlineData(new bool[] { true, false }, new string[] { "123-456-789", "111-222-333" }, new long[] { 10, 4000000 }, new double[] { 1000, 20000 }, 1, 1)] // one article twice, second order with invalid quantity
+        [InlineData(new bool[] { false }, new string[] { "INVALID" }, new long[] { 10 }, new double[] { 1000 }, 0, 1)] // article code doesn't exist
+        [InlineData(new bool[] { false }, new string[] { "123-456-789" }, new long[] { 100000 }, new double[] { 1000 }, 0, 1)] // quantity is bigger than expected
+        [InlineData(new bool[] { false }, new string[] { "123-456-789" }, new long[] { 10 }, new double[] { 1 }, 0, 1)] // maxExpectedPrice is lower than expected
+        [InlineData(new bool[] { false }, new string[] { "" }, new long[] { 10 }, new double[] { 1 }, 0, 1)] // string.Empty as article code 
+        [InlineData(new bool[] { false }, new string[] { null }, new long[] { 10 }, new double[] { 1 }, 0, 1)] // string.Empty as article code 
+        public void TestFullArticleSellingFlow(bool[] shouldCompleteOrder, string[] articleCode, long[] quantity, double[] maxExpectedPrice, long metricsCompleted, long metricsFailed)
         {
             // Arrange
 
             // Act
-            var orderItems = ShopService.SellArticle(articleCode, quantity, maxExpectedPrice);
-            ShopService.CompleteOrder(orderItems, Context.Customers.First().Id);
+            for (var i = 0; i < articleCode.Length; i++)
+            {
+                var orderItems = ShopService.SellArticle(articleCode[i], quantity[i], maxExpectedPrice[i]);
+                ShopService.CompleteOrder(orderItems, Context.Customers.First().Id);
 
-            // Assert
-            if (shouldCompleteOrder)
-            {
-                Assert.NotNull(orderItems);
-                Assert.NotNull(Context.Orders);
-            }
-            else
-            {
-                Assert.False(Context.Orders.Any());
+                // Assert
+                if (shouldCompleteOrder[i])
+                {
+                    Assert.NotNull(orderItems);
+                    Assert.NotNull(Context.Orders);
+                }
+                else
+                {
+                    Assert.Equal(Context.Orders.Count, metricsFailed);
+                }
             }
 
             Assert.Equal(OrderMetrics.Completed, metricsCompleted);
