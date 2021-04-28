@@ -1,4 +1,5 @@
-﻿using Nultien.TheShop.Tests.Unit.Common;
+﻿using Nultien.TheShop.Common.Exceptions;
+using Nultien.TheShop.Tests.Unit.Common;
 using System.Linq;
 using Xunit;
 
@@ -50,17 +51,16 @@ namespace Nultien.TheShop.Tests.Integration
             // Arrange
 
             // Act
-            var article = ShopService.GetArticleInformation(articleCode);
-
             // Assert
             if (shouldPass)
             {
+                var article = ShopService.GetArticleInformation(articleCode);
                 Assert.NotNull(articleCode);
                 Assert.Equal(article.Code, articleCode);
             }
             else
             {
-                Assert.Null(article);
+                Assert.Throws<ArticleNotFoundException>(() => ShopService.GetArticleInformation(articleCode));
             }
 
             Assert.Equal(ArticleMetrics.Found, metricsFound);

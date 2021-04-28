@@ -31,16 +31,8 @@ namespace Nultien.TheShop.Services
         /// </<inheritdoc/>
         public Article GetArticleInformation(string articleCode)
         {
-            Article article = null;
-            try
-            {
-                article = articleRepository.GetByCode(articleCode ?? string.Empty);
-                articleMetrics.IncreaseFound();
-            }
-            catch (ArticleNotFoundException ex)
-            {
-                logger.LogWarning(ex, "Article {articleCode} not found.", articleCode);
-            }
+            var article = articleRepository.GetByCode(articleCode ?? string.Empty);
+            articleMetrics.IncreaseFound();
             return article;
         }
 

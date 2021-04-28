@@ -6,7 +6,7 @@ namespace Nultien.TheShop.Services
     public interface IShopService
     {
         /// <summary>
-        /// Gets article informations based on article code, returns null if article doesnt exists.
+        /// Gets article informations based on article code, throws ArticleNotFoundException if article doesnt exists.
         /// </summary>
         /// <param name="articleCode"></param>
         /// <returns></returns>

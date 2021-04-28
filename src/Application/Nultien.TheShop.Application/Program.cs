@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Nultien.TheShop.Common.Exceptions;
 using Nultien.TheShop.Common.Metrics;
 using Nultien.TheShop.Services;
 using System.Linq;
@@ -31,11 +32,25 @@ namespace Nultien.TheShop.Application
             shopService.CompleteOrder(orderItems, context.Customers.First().Id);
 
             // Article search
-            var article = shopService.GetArticleInformation("111-222-333");
-            logger.LogInformation(article?.ToString() ?? "Article doesn't exists!");
+            try
+            {
+                var article = shopService.GetArticleInformation("111-222-333");
+                logger.LogInformation(article.ToString());
+            }
+            catch (ArticleNotFoundException ex)
+            {
+                logger.LogWarning(ex, "Article not found! {errorMessage}", ex.ErrorMessage);
+            }
 
-            article = shopService.GetArticleInformation("INVALID");
-            logger.LogInformation(article?.ToString() ?? "Article doesn't exists!");
+            try
+            {
+                var article = shopService.GetArticleInformation("INVALID");
+                logger.LogInformation(article.ToString());
+            }
+            catch (ArticleNotFoundException ex)
+            {
+                logger.LogWarning(ex, "Article not found! {errorMessage}", ex.ErrorMessage);
+            }
 
             // Metrics
             logger.LogInformation("Metrics for Orders, total orders attempts: {totalOrderAttempts}, successfull orders {successfullOrders}, failed orders {failedOrders}", orderMetrics.Failed + orderMetrics.Completed, orderMetrics.Completed, orderMetrics.Failed);
