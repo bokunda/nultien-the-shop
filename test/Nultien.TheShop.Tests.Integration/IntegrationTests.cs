@@ -33,12 +33,9 @@ namespace Nultien.TheShop.Tests.Integration
                     Assert.NotNull(orderItems);
                     Assert.NotNull(Context.Orders);
                 }
-                else
-                {
-                    Assert.Equal(Context.Orders.Count, metricsFailed);
-                }
             }
 
+            Assert.Equal(Context.Orders.Count, metricsCompleted);
             Assert.Equal(OrderMetrics.Completed, metricsCompleted);
             Assert.Equal(OrderMetrics.Failed, metricsFailed);
         }
