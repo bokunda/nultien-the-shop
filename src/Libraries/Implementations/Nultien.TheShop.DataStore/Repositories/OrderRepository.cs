@@ -70,6 +70,7 @@ namespace Nultien.TheShop.DataStore.Repositories
                     inventoryRepository.IncreaseQuantity(orderItem.InventoryId, orderItem.Quantity);
                 }
 
+                orderItems = new List<OrderItem>();
                 logger.LogInformation("Cannot order item {articleCode} because there are no enough articles in inventories. ({currentQuantity}/{wantedQuantity})", inventories.FirstOrDefault()?.ArticleCode, orderItems.Sum(x => x.Quantity), quantity);
             }
 

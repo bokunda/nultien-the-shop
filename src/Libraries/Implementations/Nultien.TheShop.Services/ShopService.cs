@@ -31,23 +31,23 @@ namespace Nultien.TheShop.Services
         /// </<inheritdoc/>
         public Article GetArticleInformation(string articleCode)
         {
+            Article article = null;
             try
             {
-                var article = articleRepository.GetByCode(articleCode);
+                article = articleRepository.GetByCode(articleCode ?? string.Empty);
                 articleMetrics.IncreaseFound();
             }
             catch (ArticleNotFoundException ex)
             {
                 logger.LogWarning(ex, "Article {articleCode} not found.", articleCode);
             }
-
-            return null;
+            return article;
         }
 
         /// </<inheritdoc/>
         public List<OrderItem> SellArticle(string articleCode, long quantity, double maxExpectedPrice)
         {
-            return orderService.OrderArticle(articleCode, quantity, maxExpectedPrice);
+            return orderService.OrderArticle(articleCode ?? string.Empty, quantity, maxExpectedPrice);
         }
 
         /// </<inheritdoc/>
